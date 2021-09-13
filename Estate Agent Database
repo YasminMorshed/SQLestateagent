@@ -1,0 +1,331 @@
+/*
+Yasmin Morshed 2021 Digital Skills Bootcamp Portfolio
+*/
+
+/*
+select * from property;
+select * from estate_agent;
+select * from staff_member;
+select * from property_owner;
+select * from viewing;
+select * from offer;
+select * from client;
+*/
+
+-- DELETE Existing Tables
+
+PRAGMA foreign_keys = OFF;
+
+DROP TABLE IF EXISTS offer;
+DROP TABLE IF EXISTS viewing;
+DROP TABLE IF EXISTS client;
+DROP TABLE IF EXISTS staff_member;
+DROP TABLE IF EXISTS property;
+DROP TABLE IF EXISTS property_owner;
+DROP TABLE IF EXISTS estate_agent;
+
+PRAGMA foreign_keys = ON;
+
+-- CREATE tables
+
+
+CREATE TABLE estate_agent (
+	estate_agent_id INT PRIMARY KEY
+	,estate_agent_name VARCHAR(50) NOT NULL
+  ,managing_director VARCHAR(100)
+  ,address_no VARCHAR(7) NOT NULL
+  ,address_street VARCHAR(255)
+  ,address_town VARCHAR(255)
+  ,address_city VARCHAR(255)
+  ,address_post_code CHAR(8) NOT NULL
+  ,tel_no CHAR(15) NOT NULL
+  ,email VARCHAR(75)
+	);
+
+
+CREATE TABLE property_owner (
+  property_owner_id INT PRIMARY KEY
+	,title VARCHAR(5)
+	,first_name VARCHAR(100) NOT NULL
+  ,last_name VARCHAR(100) NOT NULL
+  ,address_house_no VARCHAR(7) NOT NULL
+  ,address_street VARCHAR(255)
+  ,address_town VARCHAR(255)
+  ,address_city VARCHAR(255)
+  ,address_post_code CHAR(8) NOT NULL
+  ,tel_no CHAR(15) NOT NULL
+  ,email VARCHAR(75)
+	);
+
+
+CREATE TABLE property (
+	property_id INTEGER PRIMARY KEY AUTOINCREMENT
+	,property_type VARCHAR(50) NOT NULL
+  ,address_house_no VARCHAR(7) NOT NULL
+  ,address_street VARCHAR(255)
+  ,address_town VARCHAR(255)
+  ,address_city VARCHAR(255)
+  ,address_post_code CHAR(8) NOT NULL
+  ,min_offer INT (9) NOT NULL
+  ,property_owner_id INTEGER
+  ,estate_agent_id INTEGER
+  ,FOREIGN KEY (property_owner_id) REFERENCES property_owner (property_owner_id)
+  ,FOREIGN KEY (estate_agent_id) REFERENCES estate_agent (estate_agent_id)
+	);
+
+
+CREATE TABLE staff_member (
+	staff_member_id INTEGER PRIMARY KEY AUTOINCREMENT
+	,title VARCHAR(5)
+	,first_name VARCHAR(100) NOT NULL
+  ,last_name VARCHAR(100) NOT NULL
+  ,address_house_no VARCHAR(7) NOT NULL
+  ,address_street VARCHAR(255)
+  ,address_town VARCHAR(255)
+  ,address_city VARCHAR(255)
+  ,address_post_code CHAR(8) NOT NULL
+  ,tel_no CHAR(15) NOT NULL
+  ,email VARCHAR(75)
+	);
+
+
+CREATE TABLE client (
+  client_id INTEGER PRIMARY KEY AUTOINCREMENT
+  ,title VARCHAR(5)
+  ,first_name VARCHAR(100) NOT NULL
+  ,last_name VARCHAR(100) NOT NULL
+  ,address_house_no VARCHAR(7) NOT NULL
+  ,address_street VARCHAR(255)
+  ,address_town VARCHAR(255)
+  ,address_city VARCHAR(255)
+  ,address_post_code CHAR(8) NOT NULL
+  ,tel_no CHAR(15) NOT NULL
+  ,email VARCHAR(75)
+  ,notes VARCHAR(255)
+  );
+
+
+CREATE TABLE viewing (
+  viewing_id INTEGER PRIMARY KEY AUTOINCREMENT
+  ,viewing_date DATE
+  ,viewing_time TIME
+  ,property_id INTEGER
+  ,client_id INTEGER
+  ,staff_member_id INTEGER
+  ,FOREIGN KEY (property_id) REFERENCES property (property_id)
+  ,FOREIGN KEY (client_id) REFERENCES client (client_id)
+  ,FOREIGN KEY (staff_member_id) REFERENCES staff_member (staff_member_id)
+  );
+
+
+CREATE TABLE offer (
+  offer_id INTEGER PRIMARY KEY AUTOINCREMENT
+  ,offer_date DATE
+  ,price INT (9)
+  ,accepted CHAR(1)
+  ,property_id INTEGER
+  ,client_id INTEGER
+  ,FOREIGN KEY (property_id) REFERENCES property (property_id)
+  ,FOREIGN KEY (client_id) REFERENCES client (client_id)
+  );
+
+
+-- Insert data into the estate_agent table
+
+INSERT INTO estate_agent
+VALUES (
+	1
+	,'Northwood'
+  ,'Daniaal Byers'
+  ,'80'
+  ,'Green Acres Road'
+  ,NULL
+  ,'Nottingham'
+  ,'NG34 7RA'
+  ,'44 118 496 0884'
+  ,'daniaal.byers@gmail.com'
+	);
+
+INSERT INTO estate_agent
+VALUES (
+	2
+  ,'Purplebricks'
+  ,'Abbi Dotson'
+  ,'29'
+  ,'McVaney Road'
+  ,NULL
+  ,'Devon'
+  ,'DT7 3EG'
+  ,'44 131 496 0522'
+  ,'abbi.dotson@gmail.com'
+  );
+
+INSERT INTO estate_agent
+VALUES (
+	3
+  ,'Sunny Properties'
+  ,'Rick Davenport'
+  ,'155'
+  ,'Lynn Street'
+  ,NULL
+  ,'Manchester'
+  ,'M1 1AA'
+  ,'44 117 496 0385'
+  ,'rick.davenport@gmail.com'
+  );
+
+INSERT INTO estate_agent
+VALUES (
+	4
+  ,'Bridge Properties'
+  ,'Romilly Gilbert'
+  ,'100'
+  ,'Clousson Road'
+  ,NULL
+  ,'London'
+  ,'E1 6AN'
+  ,'44 20 7946 0118'
+  ,'romilly.gilbert@outlook.com'
+  );
+
+INSERT INTO estate_agent
+VALUES (
+	5
+  ,'Prime Location'
+  ,'Bartlomiej Hatfield'
+  ,'1500'
+  ,'Clousson Road'
+  ,NULL
+  ,'Southampton'
+  ,'SO16 4EE'
+  ,'44 113 496 0273'
+  ,'hatfield@primelocation.com'
+  );
+
+
+-- Insert data into the property_owner table
+
+INSERT INTO property_owner
+VALUES (
+	1
+  ,'Ms'
+  ,'Myrtle'
+  ,'Stammler'
+	,'538'
+	,'Dottie Street'
+	,NULL
+	,'Aibura'
+  ,'SU 05178'
+  ,'44 20 7946 0340'
+  ,'mstammler0@geocities.jp'
+  );
+
+INSERT INTO property_owner
+VALUES (
+	2
+	,'Dr'
+	,'Bianka'
+	,'Newcome'
+	,'643'
+	,'Cascade Hill'
+	,'Yuxin'
+	,NULL
+	,'BU 07650'
+	,'44 20 8946 0350'
+	,'bnewcome1@trellian.com');
+
+INSERT INTO property_owner
+VALUES (
+	3
+	, 'Ms'
+	, 'Tracee'
+	, 'Rolls'
+	, '7476'
+	, 'Sullivan Street'
+	,NULL
+	, 'Libao'
+	, 'LB 23478'
+	, '44 131 496 0490'
+	, 'trolls2@jiathis.com');
+
+INSERT INTO property_owner
+VALUES (
+	4
+	, 'Dr'
+	, 'Andy'
+	, 'Beahan'
+	, '2706'
+	, 'Bartillon View'
+	, 'Dobrošte'
+	, NULL
+	, 'DB 12258'
+	, '44 131 496 0572'
+	, 'abeahan3@printfriendly.com');
+
+INSERT INTO property_owner
+VALUES (
+ 5
+ , 'Mrs'
+ , 'Clement'
+ , 'Lau'
+ , '1'
+ , 'Dovetail Road'
+ , NULL
+ , 'Changle'
+ , 'CH 38596'
+ , '44 20 7946 1000'
+ , 'clau4@wp.com'
+ );
+
+
+-- Insert data into the property table
+
+INSERT INTO property (property_type, address_house_no, address_street, address_town, address_city, address_post_code, min_offer, property_owner_id, estate_agent_id) values ('Studio Flat', '399', 'East Terrace', NULL, 'London', 'TB23 050', 460000, 2, 4);
+INSERT INTO property (property_type, address_house_no, address_street, address_town, address_city, address_post_code, min_offer, property_owner_id, estate_agent_id) values ('Studio Flat', '631', 'Fairfield Road', NULL, 'Birmingham', 'NO28 404', 730000, 3, 2);
+INSERT INTO property (property_type, address_house_no, address_street, address_town, address_city, address_post_code, min_offer, property_owner_id, estate_agent_id) values ('Converted Flat', '7', 'Jenna Mount', NULL, 'Manchester', 'MA88 906', 250000, 5, 5);
+INSERT INTO property (property_type, address_house_no, address_street, address_town, address_city, address_post_code, min_offer, property_owner_id, estate_agent_id) values ('House', '3', 'Buhler View', NULL, 'Leeds', 'LO15 490', 100000, 3, 4);
+INSERT INTO property (property_type, address_house_no, address_street, address_town, address_city, address_post_code, min_offer, property_owner_id, estate_agent_id) values ('House', '28', 'New Castle Road', NULL, 'Liverpool', 'SR31 015', 160000, 3, 5);
+
+-- Insert data into the staff_member table
+
+INSERT INTO staff_member (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email) values ('Honorable', 'Solly', 'Seamans', '92999', 'New Castle Lane', NULL, 'York', 'YO90 603', '44 151 496 0414', 'sseamans0@paginegialle.it');
+INSERT INTO staff_member (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email) values ('Mrs', 'Emma', 'Burvill', '331', 'Heritage Street', NULL, 'Oxford', 'OX33 989', '44 117 496 0601', 'aburvill1@eepurl.com');
+INSERT INTO staff_member (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email) values ('Dr', 'Nikolia', 'Jeyness', '3036', 'Liberty Way', NULL, 'Bangor', 'BA10 200', '44 151 496 0707', 'njeyness2@oaic.gov.au');
+INSERT INTO staff_member (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email) values ('Mr', 'Jack', 'Oakman', '5', 'Dew Route', NULL, 'Birmingham', 'BG22 333', '44 151 496 0707', 'moakman3@sitemeter.com');
+INSERT INTO staff_member (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email) values ('Dr', 'Clemens', 'Bourges', '35', 'Quarry Route', NULL, 'Bath', 'BA67 224', '44 117 496 0601', 'cbourges4@biglobe.ne.jp');
+
+-- Insert data into client table
+
+insert into client (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email, notes) values ('Ms', 'Cesaro', 'Yitshak', '10', 'High Row', NULL, 'Oxford', 'OX97 680', '44 117 496 0754', 'cyitshak0@nbcnews.com', 'Looking for a mansion');
+insert into client (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email, notes) values ('Honorable', 'Enrika', 'Crenage', '2436', 'Bard Route', NULL, 'Manchester', 'MA69 422', '44 113 496 0491', 'ecrenage1@gravatar.com', 'Prefers a flat');
+insert into client (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email, notes) values ('Dr', 'Wang', 'Heyward', '827', 'Garnet Lane', NULL, 'Manchester', 'MA49 284', '44 118 496 0733', 'wheyward2@blogtalkradio.com', 'Prefers a flat');
+insert into client (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email, notes) values ('Mr', 'Min', 'Warburton', '4900', 'Ruby Avenue', NULL, 'Coventry', 'CO99 876', '44 121 496 0433', 'mwarburton3@archive.org', 'Looking for a mansion');
+insert into client (title, first_name, last_name, address_house_no, address_street, address_town, address_city, address_post_code, tel_no, email, notes) values ('Mr', 'Cam', 'Titmus', '22', 'South Way', NULL, 'Oxford', 'OX44 789', '44 113 496 0491', 'ctitmus4@mozilla.org', 'Wants to move to countryside');
+
+
+-- Insert data in viewings table
+
+INSERT INTO viewing (viewing_date, viewing_time, property_id, client_id, staff_member_id)
+VALUES ('2020-08-05', '08:00PM', 1, 1, 1);
+INSERT INTO viewing (viewing_date, viewing_time, property_id, client_id, staff_member_id)
+VALUES ('2020-09-01', '09:00AM', 2, 2, 2);
+INSERT INTO viewing (viewing_date, viewing_time, property_id, client_id, staff_member_id)
+VALUES ('2020-08-20', '09:00AM', 1, 3, 1);
+INSERT INTO viewing (viewing_date, viewing_time, property_id, client_id, staff_member_id)
+VALUES ('2021-01-25', '10:00AM', 3, 4, 3);
+INSERT INTO viewing (viewing_date, viewing_time, property_id, client_id, staff_member_id)
+VALUES ('2021-03-10', '10:00AM', 4, 5, 4);
+
+
+-- Insert data in offer table
+
+INSERT INTO offer (offer_date, price, accepted, property_id, client_id)
+VALUES ('2020-08-12', 465000, 'N', 1, 1);
+INSERT INTO offer (offer_date, price, accepted, property_id, client_id)
+VALUES ('2020-09-10', 800000, 'Y', 2, 2);
+INSERT INTO offer (offer_date, price, accepted, property_id, client_id)
+VALUES ('2020-08-25', 480000, 'N', 1, 3);
+INSERT INTO offer (offer_date, price, accepted, property_id, client_id)
+VALUES ('2021-01-27', 300000, 'Y', 3, 4);
+INSERT INTO offer (offer_date, price, accepted, property_id, client_id)
+VALUES ('2021-03-18', 150000, 'N', 4, 5);
