@@ -1,6 +1,14 @@
-# SQLestateagent
-<br/>
-:house_with_garden::house::house::house::house_with_garden:<br/><br/>
-This is a database which I made using SQL for one of the portfolios of the Skills Bootcamp in Digital course (MMU, Heroworx, IoC).<br/><br/>
-ALL of the details in this sample database are random/ fictional.
+# SQL Portfolio 
+:house_with_garden: SQL Database for Estate Agent and Luxury Home Viewings
+
+## Notes
+
+- Our lecturer was Dr Naomi Adel from Manchester Metropolitan University
+- Grade: 96/100
+- All details are fictional
+
+## Features
+
+- SQL Database
+- Entity-relationship diagram created in Paradigm software
 
